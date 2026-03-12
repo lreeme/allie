@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infection Control Consulting</title>
+  <style>
+    :root {
+      --green-dark: #123b33;
+      --green-mid: #1f5a4d;
+      --green-soft: #7f9c90;
+      --green-bg: #f4f8f6;
+      --text-dark: #0f172a;
+      --text-body: #475569;
+      --white: #ffffff;
+      --border: #d9e5df;
+      --shadow: 0 18px 40px rgba(18, 59, 51, 0.08);
+      --shadow-hover: 0 22px 52px rgba(18, 59, 51, 0.12);
+      --radius-lg: 32px;
+      --radius-md: 24px;
+      --radius-sm: 18px;
+      --container: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 55%, var(--green-soft) 100%);
+      color: var(--white);
+    }
+
+    .hero-rings {
+      position: absolute;
+      inset: 0;
+      opacity: 0.1;
+      pointer-events: none;
+    }
+
+    .ring {
+      position: absolute;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 999px;
+    }
+
+    .ring-1 {
+      top: -96px;
+      right: -96px;
+      width: 320px;
+      height: 320px;
+    }
+
+    .ring-2 {
+      top: 80px;
+      right: 80px;
+      width: 224px;
+      height: 224px;
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .ring-3 {
+      bottom: -110px;
+      left: -110px;
+      width: 280px;
+      height: 280px;
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .hero-watermark {
+      position: absolute;
+      inset: 0 0 0 auto;
+      width: 42%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .hero-watermark img {
+      width: 78%;
+      max-width: 420px;
+      object-fit: contain;
+      opacity: 0.08;
+      filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.18));
+    }
+
+    .site-header {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand img {
+      height: 56px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand-copy {
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      padding-left: 16px;
+    }
+
+    .eyebrow-light {
+      margin: 0 0 4px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .brand-copy p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 15px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 32px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .nav a:hover {
+      color: var(--white);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: var(--white);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .mobile-nav {
+      display: none;
+      position: relative;
+      z-index: 2;
+      padding-bottom: 20px;
+    }
+
+    .mobile-nav.open {
+      display: block;
+    }
+
+    .mobile-nav-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 20px;
+      padding: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    .mobile-nav a {
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 15px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 56px;
+      padding: 32px 0 96px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: rgba(255, 255, 255, 0.82);
+      margin-bottom: 20px;
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      max-width: 780px;
+      font-size: clamp(40px, 5vw, 66px);
+      line-height: 1.08;
+      font-weight: 700;
+    }
+
+    .hero-copy p {
+      margin: 24px 0 0;
+      max-width: 720px;
+      font-size: 19px;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.86);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--white);
+      color: var(--green-dark);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: var(--white);
+      background: transparent;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .highlight-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 24px;
+      backdrop-filter: blur(8px);
+    }
+
+    .card-label-light {
+      margin: 0 0 18px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .highlight-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .highlight-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .highlight-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--white);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .highlight-item p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    section.standard {
+      padding: 88px 0;
+    }
+
+    .section-intro {
+      max-width: 780px;
+      margin-bottom: 48px;
+    }
+
+    .eyebrow-dark {
+      margin: 0 0 12px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: var(--green-mid);
+    }
+
+    .section-intro h2,
+    .approach-copy h2,
+    .feature-banner h2,
+    .contact-copy h2 {
+      margin: 0;
+      font-size: clamp(30px, 3vw, 46px);
+      line-height: 1.18;
+    }
+
+    .section-intro p,
+    .approach-copy p,
+    .feature-banner p,
+    .contact-copy p {
+      margin: 20px 0 0;
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--text-body);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .service-accent {
+      width: 56px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--green-mid);
+      margin-bottom: 20px;
+    }
+
+    .service-card h3 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.3;
+    }
+
+    .service-card p {
+      margin: 16px 0 0;
+      color: var(--text-body);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .approach-section {
+      background: var(--green-bg);
+    }
+
+    .approach-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .approach-steps {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .step-card {
+      background: var(--white);
+      border: 1px solid #eef4f1;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+    }
+
+    .step-card h3 {
+      margin: 0;
+      color: var(--green-dark);
+      font-size: 22px;
+    }
+
+    .step-card p {
+      margin: 12px 0 0;
+      color: var(--text-body);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .feature-banner-wrap {
+      padding: 88px 0;
+    }
+
+    .feature-banner {
+      background: linear-gradient(135deg, var(--green-dark) 0%, #1c4b41 100%);
+      color: var(--white);
+      border-radius: 32px;
+      padding: 40px 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: end;
+    }
+
+    .feature-banner .eyebrow-light {
+      margin-bottom: 12px;
+    }
+
+    .feature-banner p {
+      color: rgba(255, 255, 255, 0.86);
+      max-width: 760px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .cta-box {
+      background: var(--green-bg);
+      border: 1px solid #e2ece7;
+      border-radius: 24px;
+      padding: 24px;
+      min-width: 320px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+    }
+
+    .cta-box h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .cta-box ul {
+      margin: 16px 0 0;
+      padding-left: 18px;
+      color: var(--text-body);
+    }
+
+    .cta-box li + li {
+      margin-top: 10px;
+    }
+
+    .footer-bar {
+      background: var(--green-dark);
+      color: var(--white);
+      border-top: 1px solid #dfe8e4;
+      margin-top: 18px;
+    }
+
+    .footer-bar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 28px;
+      padding: 28px 0;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-brand img {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .footer-brand-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.92);
+      margin: 0 0 4px;
+    }
+
+    .footer-brand-subtitle {
+      margin: 0;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: rgba(255, 255, 255, 0.62);
+    }
+
+    .footer-bar-text {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.72);
+      text-align: right;
+      max-width: 540px;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-content,
+      .approach-grid,
+      .feature-banner,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-watermark {
+        width: 36%;
+      }
+
+      .footer-bar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-bar-text {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .nav {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: inline-flex;
+      }
+
+      .brand-copy {
+        display: none;
+      }
+
+      .services-grid,
+      .approach-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-watermark {
+        display: none;
+      }
+
+      .cta-box {
+        min-width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(var(--container), calc(100% - 32px));
+      }
+
+      .site-header {
+        padding: 16px 0;
+      }
+
+      .brand img {
+        height: 42px;
+      }
+
+      .hero-content {
+        gap: 28px;
+        padding: 18px 0 64px;
+      }
+
+      .pill {
+        font-size: 11px;
+        letter-spacing: 0.18em;
+      }
+
+      .hero-copy p,
+      .section-intro p,
+      .approach-copy p,
+      .feature-banner p,
+      .contact-copy p {
+        font-size: 16px;
+      }
+
+      section.standard,
+      .feature-banner-wrap {
+        padding: 68px 0;
+      }
+
+      .feature-banner {
+        padding: 28px 24px;
+        border-radius: 24px;
+      }
+
+      .service-card,
+      .step-card,
+      .highlight-card,
+      .cta-box {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-rings">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+    </div>
+
+    <div class="hero-watermark">
+      <img src="images/acacia-logo.png" alt="" aria-hidden="true" />
+    </div>
+
+    <div class="container">
+      <header class="site-header">
+        <div class="brand">
+          <img src="images/acacia-logo.png" alt="Acacia Safety Consulting logo" />
+          <div class="brand-copy">
+            <div class="eyebrow-light">Infection Control Consulting</div>
+            <p>Practical Support for Healthcare Environments</p>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a href="#services">Services</a>
+          <a href="#approach">Approach</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <button class="mobile-menu-btn" id="menuToggle" aria-expanded="false" aria-controls="mobileNav">
+          Menu
+        </button>
+      </header>
+
+      <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-inner">
+          <a href="#services">Services</a>
+          <a href="#approach">Approach</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-copy">
+          <div class="pill">Safe clinical environments</div>
+          <h1>Infection control support built for hospitals, clinics, and real-world care delivery.</h1>
+          <p>
+            Practical consulting to help healthcare organizations identify risk, respond to incidents,
+            improve sterile processing performance, and strengthen infection prevention programs with
+            clear, actionable guidance.
+          </p>
+          <div class="hero-actions">
+            <a href="#services" class="btn btn-primary">Explore Services</a>
+            <a href="#contact" class="btn btn-secondary">Request a Consultation</a>
+          </div>
+        </div>
+
+        <div class="highlight-card">
+          <div class="card-label-light">What we deliver</div>
+          <div class="highlight-list" id="highlightList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="standard" id="services">
+    <div class="container">
+      <div class="section-intro">
+        <div class="eyebrow-dark">What we offer</div>
+        <h2>Consulting services for infection prevention and clinical safety programs</h2>
+        <p>
+          Our consulting approach blends structured assessment with practical implementation support,
+          giving teams usable recommendations that fit day-to-day operations.
+        </p>
+      </div>
+
+      <div class="services-grid" id="servicesGrid"></div>
+    </div>
+  </section>
+
+  <section class="standard approach-section" id="approach">
+    <div class="container">
+      <div class="approach-grid">
+        <div class="approach-copy">
+          <div class="eyebrow-dark">Our approach</div>
+          <h2>Clear recommendations, realistic implementation, stronger infection prevention outcomes.</h2>
+          <p>
+            We focus on practical infection control support that works within the pace and complexity
+            of healthcare operations. That means reviewing the environment, evaluating workflows,
+            identifying vulnerabilities, and helping teams move from findings to action.
+          </p>
+        </div>
+
+        <div class="approach-steps" id="approachSteps"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature-banner-wrap">
+    <div class="container">
+      <div class="feature-banner">
+        <div>
+          <div class="eyebrow-light">Featured capabilities</div>
+          <h2>From program assessments to urgent response support</h2>
+          <p>
+            Whether you need a high-level infection control risk review, sterile processing assessment,
+            support during an outbreak investigation, or training on identifying hospital-acquired
+            infections, this page presents those services in a clean, modern consulting format.
+          </p>
+        </div>
+        <div>
+          <a href="#contact" class="btn btn-primary">Start the Conversation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="standard" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-copy">
+          <div class="eyebrow-dark">Contact</div>
+          <h2>Need infection control consulting support?</h2>
+          <p>
+           
+Please contact us to learn how Acacia Safety Consulting can help you meet your goals.
+
+414.522.7450
+
+contact@acacia-safety.com
+          </p>
+        </div>
+
+                 </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <div class="container footer-bar-inner">
+        <div class="footer-brand">
+          <img src="images/acacia-logo.png" alt="Acacia Safety Consulting logo" />
+          <div>
+            <p class="footer-brand-title">Infection Control Consulting</p>
+            <p class="footer-brand-subtitle">Safe clinical environments</p>
+          </div>
+        </div>
+        <p class="footer-bar-text">
+          Risk assessments, outbreak response, sterile processing reviews, and HAI training support.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const services = [
+      {
+        title: "Infection Control Risk Assessments",
+        description:
+          "Targeted reviews of patient care areas, support spaces, facility design, and workflows to identify transmission risks and prioritize practical mitigation steps."
+      },
+      {
+        title: "Outbreak Investigations",
+        description:
+          "Structured support for suspected clusters and confirmed outbreaks, including tracing likely sources, evaluating processes, and developing corrective action plans."
+      },
+      {
+        title: "Exposure Response",
+        description:
+          "Guidance for occupational and patient exposure events, from immediate containment steps through documentation, communication, and follow-up recommendations."
+      },
+      {
+        title: "Facility Design Review",
+        description:
+          "Infection prevention input during planning, renovation, and operational design to help align spaces, finishes, flows, and equipment placement with safe clinical practice."
+      },
+      {
+        title: "Sterile Processing Program Assessments",
+        description:
+          "Comprehensive evaluations of decontamination, assembly, sterilization, storage, and transport practices to strengthen consistency, quality, and readiness."
+      },
+      {
+        title: "HAI Identification Training",
+        description:
+          "Training for teams responsible for recognizing hospital-acquired infections, improving surveillance awareness, escalation pathways, and documentation quality."
+      }
+    ];
+
+    const highlights = [
+      "Hospital and clinic-focused consulting",
+      "Operationally grounded recommendations",
+      "Assessment, training, and response support",
+      "Built for real workflows, not just policies"
+    ];
+
+    const approachSteps = [
+      {
+        title: "Assess",
+        body: "Review spaces, workflows, procedures, and risk points across clinical and support operations."
+      },
+      {
+        title: "Investigate",
+        body: "Support event response and outbreak review with a structured, evidence-informed process."
+      },
+      {
+        title: "Train",
+        body: "Build team awareness and consistency through focused education and operational coaching."
+      },
+      {
+        title: "Strengthen",
+        body: "Develop practical next steps to improve readiness, consistency, and patient safety."
+      }
+    ];
+
+    const servicesGrid = document.getElementById("servicesGrid");
+    const highlightList = document.getElementById("highlightList");
+    const approachStepsContainer = document.getElementById("approachSteps");
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileNav = document.getElementById("mobileNav");
+
+    services.forEach((service) => {
+      const card = document.createElement("article");
+      card.className = "service-card";
+      card.innerHTML = `
+        <div class="service-accent"></div>
+        <h3>${service.title}</h3>
+        <p>${service.description}</p>
+      `;
+      servicesGrid.appendChild(card);
+    });
+
+    highlights.forEach((item) => {
+      const row = document.createElement("div");
+      row.className = "highlight-item";
+      row.innerHTML = `
+        <span class="highlight-dot"></span>
+        <p>${item}</p>
+      `;
+      highlightList.appendChild(row);
+    });
+
+    approachSteps.forEach((step) => {
+      const card = document.createElement("div");
+      card.className = "step-card";
+      card.innerHTML = `
+        <h3>${step.title}</h3>
+        <p>${step.body}</p>
+      `;
+      approachStepsContainer.appendChild(card);
+    });
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = mobileNav.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    mobileNav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileNav.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  </script>
+</body>
+</html>
